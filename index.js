@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const fs = require("fs");
-const config = require('./config.json')
-const prefix = config.prefix;
+//const config = require('./config.json')
+const prefix = process.env.prefix;
 const bot = new Discord.Client({disableMentions:'everyone'});
 const mongoose = require('mongoose')
 bot.prefix = prefix;
@@ -11,8 +11,8 @@ bot.snipes = new Discord.Collection();
 bot.events = new Discord.Collection();
 bot.categories = fs.readdirSync("./commands/");
 
-const token = require(`./token.json`)
-mongoose.connect(token.Mongo,{
+//const token = require(`./token.json`)
+mongoose.connect(process.env.Mongo,{
     useUnifiedTopology: true,
     useNewUrlParser: true,
 });
@@ -33,4 +33,4 @@ bot.on('messageUpdate',async(oldMessage,newMessage)=>{
 bot.on('messageDelete',async(message)=>{
     require('./events/guild/messageDelete')(message)
 })
-bot.login(token.Token)
+bot.login(process.env.token)
